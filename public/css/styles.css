@@ -32,7 +32,7 @@ code {
 }
 
 :root {
-    --redux-color: #6666ff;
+    --redux-color: #009688;
 }
 
 p {
@@ -263,4 +263,16 @@ button.reaction-button {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+}
+
+.postRegistrationBtn,
+.postRegistrationBtn:focus {
+    background-color: #F44336;
+    border-color: #F44336;
+    margin: 2rem 0
+}
+
+.postRegistrationBtn:hover {
+    background-color: #FF5722;
+    border-color: #FF5722;
 }

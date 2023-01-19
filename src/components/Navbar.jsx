@@ -2,8 +2,8 @@ const Navbar = () => {
   return (
     <nav>
       <section>
-        <h1>
-          وبلاگ ریداکسی من
+        <h1 className="text-center">
+          وبلاگ ساده ریداکس
           <div className="navContent">
             <div className="navLinks"></div>
           </div>
