@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import SingleBlog from "../components/SingleBlog";
 import MainLayout from "../layouts/MainLayout";
 
 export const router = createBrowserRouter([
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <App />,
+      },
+      {
+        path: "/blogs/:blogId",
+        element: <SingleBlog />,
       },
     ],
   },
