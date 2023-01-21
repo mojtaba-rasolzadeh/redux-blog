@@ -1,12 +1,17 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BlogList = () => {
   const blogs = useSelector((state) => state.blogs);
 
+  const navigate = useNavigate();
+
   return (
     <section className="blog-list">
-      <button className="full-button postRegistrationBtn" style={{}}>
+      <button
+        className="full-button postRegistrationBtn"
+        onClick={() => navigate("/blogs/create-blog")}
+      >
         ثبت پست جدید
       </button>
       <h1>پست ها</h1>

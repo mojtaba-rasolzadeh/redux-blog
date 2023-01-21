@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import CreateBlog from "../components/CreateBlog";
 import SingleBlog from "../components/SingleBlog";
 import MainLayout from "../layouts/MainLayout";
 
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "/blogs/:blogId",
         element: <SingleBlog />,
+      },
+      {
+        path: "/blogs/create-blog",
+        element: <CreateBlog />,
       },
     ],
   },
