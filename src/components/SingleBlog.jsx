@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const SingleBlog = () => {
@@ -20,6 +20,9 @@ const SingleBlog = () => {
       <article className="blog">
         <h2>{blog.title}</h2>
         <p className="blog-content">{blog.content}</p>
+        <Link to={`/edit-blog/${blog.id}`} className="button">
+          ویرایش پست
+        </Link>
       </article>
     </section>
   );
