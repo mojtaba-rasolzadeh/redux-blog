@@ -33,7 +33,11 @@ const SingleBlog = () => {
         <Link to={`/edit-blog/${blog.id}`} className="button">
           ویرایش پست
         </Link>
-        <button className="muted-button" onClick={handleDeletedBlog}>
+        <button
+          className="muted-button"
+          style={{ marginRight: "20px" }}
+          onClick={handleDeletedBlog}
+        >
           حذف پست
         </button>
       </article>
