@@ -2,16 +2,14 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { blogUpdated } from "../reducers/blogSlice";
+import { blogUpdated, selectBlogById } from "../reducers/blogSlice";
 
 const UpdateBlog = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const blog = useSelector((state) =>
-    state.blogs.find((blog) => blog.id === blogId)
-  );
+  const blog = useSelector((state) => selectBlogById(state, blogId));
 
   const [title, setTitle] = useState(blog.title);
   const [content, setContent] = useState(blog.content);

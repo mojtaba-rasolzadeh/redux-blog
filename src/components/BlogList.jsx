@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { selectAllBlogs } from "../reducers/blogSlice";
 
 const BlogList = () => {
-  const blogs = useSelector((state) => state.blogs);
+  const blogs = useSelector(selectAllBlogs);
 
   const navigate = useNavigate();
 
