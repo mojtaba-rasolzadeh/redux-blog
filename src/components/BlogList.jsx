@@ -6,6 +6,7 @@ import ShowTime from "./ShowTime";
 
 const BlogList = () => {
   const blogs = useSelector(selectAllBlogs);
+  const orderBlogs = blogs.slice().sort((a, b) => b.date.localeCompare(a.date));
 
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const BlogList = () => {
         ثبت پست جدید
       </button>
       <h1>پست ها</h1>
-      {blogs.map((blog) => (
+      {orderBlogs.map((blog) => (
         <article key={blog.id} className="blog-excerpt">
           <h2>{blog.title}</h2>
           <div>

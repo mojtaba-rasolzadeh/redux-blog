@@ -1,17 +1,17 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import {sub} from 'date-fns-jalali';
+import { sub } from "date-fns-jalali";
 
 const initialState = {
   blogs: [
     {
       id: nanoid(),
-      date: sub(new Date(),{minutes:10}).toISOString(),
+      date: sub(new Date(), { days: 2, minutes: 10 }).toISOString(),
       title: "ریداکس",
       content: "این یک متن آزمایشی می باشد ",
     },
     {
       id: nanoid(),
-      date: sub(new Date(),{minutes:10}).toISOString(),
+      date: sub(new Date(), { minutes: 10 }).toISOString(),
       title: "ریداکس تولکیت",
       content: "این یک متن آزمایشی می باشد",
     },
@@ -31,6 +31,7 @@ const blogsSlice = createSlice({
           payload: {
             id: nanoid(),
             title: title,
+            date: new Date().toISOString(),
             content: content,
           },
         };
