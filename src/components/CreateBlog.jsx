@@ -10,7 +10,7 @@ const CreateBlog = () => {
   const [content, setContent] = useState("");
   const [userId, setUserId] = useState("");
 
-  console.log(userId);
+  const canSave = [title, content, userId].every(Boolean);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ const CreateBlog = () => {
   const handleChangeAuthor = (event) => setUserId(event.target.value);
 
   const handleSubmitForm = () => {
-    if (title && content) {
-      dispatch(blogAdded(title, content,userId));
+    if (canSave) {
+      dispatch(blogAdded(title, content, userId));
       setTitle("");
       setContent("");
       setUserId("");
@@ -66,6 +66,7 @@ const CreateBlog = () => {
           type="button"
           className="full-button"
           onClick={handleSubmitForm}
+          disabled={!canSave}
         >
           دخیره پست
         </button>
