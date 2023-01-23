@@ -1,25 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { blogAdded } from "../reducers/blogSlice";
+import { selectAllUsers } from "../reducers/userSlice";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [userId, setUserId] = useState("");
+
+  console.log(userId);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const users = useSelector(selectAllUsers);
+
   const handleChangeTitle = (event) => setTitle(event.target.value);
   const handleChangeContent = (event) => setContent(event.target.value);
+  const handleChangeAuthor = (event) => setUserId(event.target.value);
 
   const handleSubmitForm = () => {
     if (title && content) {
-      dispatch(blogAdded(title, content));
+      dispatch(blogAdded(title, content,userId));
       setTitle("");
       setContent("");
-      navigate('/')
+      setUserId("");
+      navigate("/");
     }
   };
 
@@ -36,7 +44,16 @@ const CreateBlog = () => {
           value={title}
           onChange={handleChangeTitle}
         />
-        <label htmlFor="blog-content">محتوای اصلی : </label>
+        <label htmlFor="blogAuthor">نویسنده : </label>
+        <select id="blogAuthor" value={userId} onChange={handleChangeAuthor}>
+          <option value="">انتخاب نویسنده</option>
+          {users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.fullname}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="blogContent">محتوای اصلی : </label>
         <textarea
           id="blogContent"
           name="blogContent"
