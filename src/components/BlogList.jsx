@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { selectAllBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
+import ShowAuthor from "./ShowAuthor";
 
 const BlogList = () => {
   const blogs = useSelector(selectAllBlogs);
@@ -24,6 +25,7 @@ const BlogList = () => {
           <h2>{blog.title}</h2>
           <div>
             <ShowTime timestamp={blog.date} />
+            <ShowAuthor userId={blog.user} />
           </div>
           <p className="blog-content">{blog.content.substring(0, 100)}</p>
           <Link to={`/blogs/${blog.id}`} className="button muted-button">

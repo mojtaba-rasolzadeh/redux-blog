@@ -8,12 +8,14 @@ const initialState = {
       date: sub(new Date(), { days: 2, minutes: 10 }).toISOString(),
       title: "ریداکس",
       content: "این یک متن آزمایشی می باشد ",
+      user: "1",
     },
     {
       id: nanoid(),
       date: sub(new Date(), { minutes: 10 }).toISOString(),
       title: "ریداکس تولکیت",
       content: "این یک متن آزمایشی می باشد",
+      user: "2",
     },
   ],
 };

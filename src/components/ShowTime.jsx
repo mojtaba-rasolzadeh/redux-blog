@@ -11,7 +11,7 @@ const ShowTime = ({ timestamp }) => {
 
   return (
     <span>
-      <i>{timeAgo}</i>
+      <i>{timeAgo}</i> &nbsp;
     </span>
   );
 };
