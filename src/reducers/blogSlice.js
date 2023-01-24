@@ -1,43 +1,17 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns-jalali";
+import { getAllBlogs } from "../services/blogServices";
 
 const initialState = {
-  blogs: [
-    {
-      id: nanoid(),
-      date: sub(new Date(), {
-        days: 2,
-        minutes: 10,
-      }).toISOString(),
-      title: "ریداکس",
-      content: "این یک متن آزمایشی می باشد ",
-      user: "1sArP0Pg8u_Ej1mlKhWIg",
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-    {
-      id: nanoid(),
-      date: sub(new Date(), {
-        minutes: 10,
-      }).toISOString(),
-      title: "ریداکس تولکیت",
-      content: "این یک متن آزمایشی می باشد",
-      user: "Ni_C2BaWuqidcQ9vpPl1w",
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-  ],
+  blogs: [],
+  status: "idle",
+  error: null,
 };
+
+export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
+  const response = await getAllBlogs();
+  return response.data;
+});
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -78,6 +52,20 @@ const blogsSlice = createSlice({
         existingBlog.reactions[reaction]++;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBlogs.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
+        state.status = "completed";
+        state.blogs = action.payload;
+      })
+      .addCase(fetchBlogs.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 

@@ -1,16 +1,25 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { selectAllBlogs } from "../reducers/blogSlice";
+import { fetchBlogs, selectAllBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionButtons from "./ReactionButtons";
 
 const BlogList = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const blogs = useSelector(selectAllBlogs);
+  const blogStatus = useSelector((state) => state.blogs.status);
   const orderBlogs = blogs.slice().sort((a, b) => b.date.localeCompare(a.date));
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (blogStatus === "idle") {
+      dispatch(fetchBlogs());
+    }
+  }, [blogStatus,dispatch]);
 
   return (
     <section className="blog-list">
