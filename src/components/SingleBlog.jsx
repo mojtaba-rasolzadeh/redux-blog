@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { blogDeleted, selectBlogById } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
+import ReactionButtons from "./ReactionButtons";
 
 const SingleBlog = () => {
   const { blogId } = useParams();
@@ -32,10 +33,11 @@ const SingleBlog = () => {
       <article className="blog">
         <h2>{blog.title}</h2>
         <p className="blog-content">{blog.content}</p>
-        <div style={{margin:'1rem 0'}}>
+        <div style={{ margin: "1rem 0" }}>
           <ShowTime timestamp={blog.date} />
           <ShowAuthor userId={blog.user} />
         </div>
+        <ReactionButtons blog={blog} />
         <Link to={`/edit-blog/${blog.id}`} className="button">
           ویرایش پست
         </Link>

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { selectAllBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
+import ReactionButtons from "./ReactionButtons";
 
 const BlogList = () => {
   const blogs = useSelector(selectAllBlogs);
@@ -27,6 +28,7 @@ const BlogList = () => {
             <ShowTime timestamp={blog.date} />
             <ShowAuthor userId={blog.user} />
           </div>
+          <ReactionButtons blog={blog} />
           <p className="blog-content">{blog.content.substring(0, 100)}</p>
           <Link to={`/blogs/${blog.id}`} className="button muted-button">
             دیدن کامل پست
