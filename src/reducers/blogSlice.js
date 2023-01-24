@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns-jalali";
-import { getAllBlogs } from "../services/blogServices";
+import { createBlog, getAllBlogs } from "../services/blogServices";
 
 const initialState = {
   blogs: [],
@@ -12,6 +12,14 @@ export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
   const response = await getAllBlogs();
   return response.data;
 });
+
+export const addNewBlog = createAsyncThunk(
+  "/blogs/addNewBlog",
+  async (initialBlog) => {
+    const response = await createBlog(initialBlog);
+    return response.data;
+  }
+);
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -29,6 +37,13 @@ const blogsSlice = createSlice({
             date: new Date().toISOString(),
             content: content,
             user: userId,
+            reactions: {
+              thumbsUp: 0,
+              hooray: 0,
+              heart: 0,
+              rocket: 0,
+              eyes: 0,
+            },
           },
         };
       },
@@ -65,6 +80,9 @@ const blogsSlice = createSlice({
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(addNewBlog.fulfilled, (state, action) => {
+        state.blogs.push(action.payload);
       });
   },
 });

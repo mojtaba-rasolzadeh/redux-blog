@@ -21,7 +21,7 @@ const ReactionButtons = ({ blog }) => {
           dispatch(reactionAdded({ blogId: blog.id, reaction: name }))
         }
       >
-        {emoji} {blog.reactions[name]}
+         {blog.reactions[name]} {emoji}
       </button>
     );
   });

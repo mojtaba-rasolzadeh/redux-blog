@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { blogAdded } from "../reducers/blogSlice";
+import { addNewBlog, blogAdded } from "../reducers/blogSlice";
 import { selectAllUsers } from "../reducers/userSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [userId, setUserId] = useState("");
+  const [requestStatus, setRequestStatus] = useState("idle");
 
-  const canSave = [title, content, userId].every(Boolean);
+  const canSave =
+    [title, content, userId].every(Boolean) && requestStatus === "idle";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,13 +24,35 @@ const CreateBlog = () => {
   const handleChangeContent = (event) => setContent(event.target.value);
   const handleChangeAuthor = (event) => setUserId(event.target.value);
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = async () => {
     if (canSave) {
-      dispatch(blogAdded(title, content, userId));
-      setTitle("");
-      setContent("");
-      setUserId("");
-      navigate("/");
+      try {
+        setRequestStatus("pending");
+        await dispatch(
+          addNewBlog({
+            id: nanoid(),
+            date:new Date().toISOString(),
+            title,
+            content,
+            user: userId,
+            reactions: {
+              thumbsUp: 0,
+              hooray: 0,
+              heart: 0,
+              rocket: 0,
+              eyes: 0,
+            },
+          })
+        );
+        setTitle("");
+        setContent("");
+        setUserId("");
+        navigate("/");
+      } catch (err) {
+        console.error("Faild to save the blog", err);
+      } finally {
+        setRequestStatus("idle");
+      }
     }
   };
 
