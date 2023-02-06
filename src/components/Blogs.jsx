@@ -8,6 +8,7 @@ import ShowAuthor from './ShowAuthor';
 import ConfirmDelete from './ConfirmDelete';
 import { toast } from 'react-toastify';
 import Settings from './Settings';
+import OverlayShowSettings from './OverlayShowSettings';
 
 const Blogs = () => {
 
@@ -52,7 +53,7 @@ const Blogs = () => {
                 <div className="flex items-end justify-between space-x-4">
                     <ShowAuthor {...blog} />
                     <div className="flex space-x-4">
-                        <button type='button' onClick={() => dispatch(toggleShowSetting({ id: blog.id, showSetting: true }))}>
+                        <button type='button' className={`${blog.showSetting && 'z-50'}`} onClick={() => dispatch(toggleShowSetting({ id: blog.id, showSetting: true }))}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-sky-700 hover:text-sky-900">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -60,6 +61,7 @@ const Blogs = () => {
                     </div>
                 </div>
                 {blog.showSetting && <Settings id={blog.id} showSetting={blog.showSetting} handleOnShowModal={handleOnShowModal} handleClose={handleClose} />}
+                {blog.showSetting && <OverlayShowSettings onClose={() => dispatch(toggleShowSetting({ id: blog.id }))} />}
             </div>
         </div>
     ))

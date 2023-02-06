@@ -9,12 +9,15 @@ import ShowAuthor from './ShowAuthor';
 import { useState } from 'react';
 import ConfirmDelete from './ConfirmDelete';
 import Settings from './Settings';
+import OverlayShowSettings from './OverlayShowSettings';
 
 const Blog = () => {
     const blogs = useSelector(selectAllBlogs);
 
     const [showModal, setShowModal] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+
+    console.log(showSettings)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -29,7 +32,7 @@ const Blog = () => {
         setShowModal(false);
         setShowSettings(false);
     }
-    
+
     const handleOnShowModal = (blogId) => {
         // dispatch(toggleShowSetting({ id: blogId }))
         setShowModal(true);
@@ -61,6 +64,7 @@ const Blog = () => {
                         <ShowAuthor {...blogs[0]} />
                         <div className="flex space-x-4">
                             <button type='button'
+                                className='z-50'
                                 // onClick={() => dispatch(toggleShowSetting({ id, showSetting: true }))}
                                 onClick={() => setShowSettings(!showSettings)}
                             >
@@ -69,7 +73,9 @@ const Blog = () => {
                                 </svg>
                             </button>
                         </div>
+                        {showSettings && <OverlayShowSettings onClose={() => setShowSettings(false)} />}
                         {showSettings && <Settings id={id} showSetting={showSettings} handleOnShowModal={handleOnShowModal} handleClose={handleClose} />}
+
                     </div>
                 </div>
             </div>

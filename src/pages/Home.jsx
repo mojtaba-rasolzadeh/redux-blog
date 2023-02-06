@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Categories, Blog, Blogs } from '../components'
-import Overlay from '../components/Overlay';
+import OverlaySidebar from '../components/OverlaySidebar';
 import Sidebar from '../components/Sidebar';
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
             {/* <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} /> */}
             {
                 <>
-                    {showMenu && <Overlay showMenu={showMenu} onClose={handleClose} />
+                    {showMenu && <OverlaySidebar showMenu={showMenu} onClose={handleClose} />
                      }
                      <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} />
                     
