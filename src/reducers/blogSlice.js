@@ -1,95 +1,186 @@
-import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
-import { sub } from "date-fns-jalali";
-import { createBlog, getAllBlogs } from "../services/blogServices";
+import {
+    createSlice,
+    nanoid
+} from '@reduxjs/toolkit';
 
 const initialState = {
-  blogs: [],
-  status: "idle",
-  error: null,
-};
-
-export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
-  const response = await getAllBlogs();
-  return response.data;
-});
-
-export const addNewBlog = createAsyncThunk(
-  "/blogs/addNewBlog",
-  async (initialBlog) => {
-    const response = await createBlog(initialBlog);
-    return response.data;
-  }
-);
+    blogs: [{
+            id: nanoid(),
+            category: 'Development',
+            title: '7 CSS tools you should be using',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: new Date().toISOString(),
+            img: '/src/assets/designer-1.jpg',
+            author: "ZYVvjYl33hgdgAplzN5Ef",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        },
+        {
+            id: nanoid(),
+            category: 'Travel',
+            title: 'Milan Places That Highlight The City',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: "2023-01-01T07:45:25.698Z",
+            img: '/src/assets/f67396fc3cfce63a28e07ebb35d974ac.jpg',
+            author: "ebk1r3TBsfoaSp676MM8P",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        },
+        {
+            id: nanoid(),
+            category: 'Shopping',
+            title: 'Online Shopping – An Alternative to Shopping in the Mall',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: "2022-12-25T07:31:34.969Z",
+            img: '/src/assets/fQwuyKJ9qxjSbr6REcgtmW-1200-80.jpg',
+            author: "i-wyWufZdoWsKSEonYKV7",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        },
+        {
+            id: nanoid(),
+            category: 'Adventure',
+            title: 'ADVENTURE IN YOU',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: "2022-12-10T07:31:34.969Z",
+            img: '/src/assets/graphic-design-trends.png',
+            author: "6zzNuVQHsMSgwWSundXIC",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        },
+        {
+            id: nanoid(),
+            category: 'Cooking',
+            title: 'Loaded BBQ Baked Potatoes',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: "2022-11-15T07:31:34.969Z",
+            img: '/src/assets/make-it-personal.jpg',
+            author: "QhBw1TyICcR9xh5fQ4NyS",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        },
+        {
+            id: nanoid(),
+            category: 'Travel',
+            title: 'Beyond the Beach',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: "2022-11-05T07:31:34.969Z",
+            img: '/src/assets/Purple-Combination-colors-graphic-design-predictions-1024x576-1024x576.jpg',
+            author: "YvPoGVTj79m-twPtBLpn4",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        },
+        {
+            id: nanoid(),
+            category: 'Art',
+            title: 'Art & Perception',
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            created_at: "2022-10-27T07:31:34.969Z",
+            img: '/src/assets/Synthwave-Postmodern.jpg',
+            author: "ZYVvjYl33hgdgAplzN5Ef",
+            reactions: {
+                heart: 0,
+            },
+            showSetting: false
+        }
+    ]
+}
 
 const blogsSlice = createSlice({
-  name: "blogs",
-  initialState: initialState,
-  reducers: {
-    blogAdded: {
-      reducer(state, action) {
-        state.blogs.push(action.payload);
-      },
-      prepare(title, content, userId) {
-        return {
-          payload: {
-            id: nanoid(),
-            title: title,
-            date: new Date().toISOString(),
-            content: content,
-            user: userId,
-            reactions: {
-              thumbsUp: 0,
-              hooray: 0,
-              heart: 0,
-              rocket: 0,
-              eyes: 0,
+    name: 'blogs',
+    initialState,
+    reducers: {
+        changeReaction: (state, action) => {
+            const {
+                blogId,
+                reaction
+            } = action.payload;
+            const existingBlog = state.blogs.find(blog => blog.id === blogId);
+            if (existingBlog) {
+                existingBlog.reactions[reaction]++;
+            }
+        },
+        blogAdded: {
+            reducer(state, action) {
+                state.blogs.push(action.payload);
+
             },
-          },
-        };
-      },
-    },
-    blogUpdated: (state, action) => {
-      const { id, title, content } = action.payload;
-      const existingBlog = state.blogs.find((blog) => blog.id === id);
-      if (existingBlog) {
-        existingBlog.title = title;
-        existingBlog.content = content;
-      }
-    },
-    blogDeleted: (state, action) => {
-      const { id } = action.payload;
-      state.blogs = state.blogs.filter((blog) => blog.id !== id);
-    },
-    reactionAdded: (state, action) => {
-      const { blogId, reaction } = action.payload;
-      const existingBlog = state.blogs.find((blog) => blog.id === blogId);
-      if (existingBlog) {
-        existingBlog.reactions[reaction]++;
-      }
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchBlogs.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(fetchBlogs.fulfilled, (state, action) => {
-        state.status = "completed";
-        state.blogs = action.payload;
-      })
-      .addCase(fetchBlogs.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(addNewBlog.fulfilled, (state, action) => {
-        state.blogs.push(action.payload);
-      });
-  },
+            prepare({
+                author,
+                title,
+                img,
+                category,
+                content
+            }) {
+                return {
+                    payload: {
+                        id: nanoid(),
+                        author,
+                        title,
+                        img,
+                        category,
+                        content,
+                        created_at: new Date().toISOString(),
+                        showSetting: false
+                    }
+                }
+            }
+        },
+        blogEdited: (state, action) => {
+            const {
+                id,
+                title,
+                author,
+                category,
+                img,
+                content
+            } = action.payload;
+            const existingBlog = state.blogs.find(blog => blog.id === id);
+            if (existingBlog) {
+                console.log(author);
+                existingBlog.author = author;
+                existingBlog.title = title;
+                existingBlog.category = category;
+                existingBlog.img = img;
+                existingBlog.content = content;
+            }
+        },
+        blogDeleted: (state, action) => {
+            const {
+                id
+            } = action.payload;
+            state.blogs = state.blogs.filter(blog => blog.id !== id);
+
+        },
+        toggleShowSetting: (state, action) => {
+            const {
+                id
+            } = action.payload;
+            const existingBlog = state.blogs.find(blog => blog.id === id);
+            existingBlog.showSetting = !existingBlog.showSetting;
+        }
+    }
 });
 
-export const selectAllBlogs = (state) => state.blogs.blogs;
-export const selectBlogById = (state, blogId) =>
-  state.blogs.blogs.find((blog) => blog.id === blogId);
+export const selectAllBlogs = state => state.blogs.blogs;
+export const selectBlogById = (state, blogId) => state.blogs.blogs.find(blog => blog.id === blogId);
 export default blogsSlice.reducer;
-export const { blogAdded, blogUpdated, blogDeleted, reactionAdded } =
-  blogsSlice.actions;
+export const {
+    changeReaction,
+    blogAdded,
+    blogEdited,
+    blogDeleted,
+    toggleShowSetting
+} = blogsSlice.actions;

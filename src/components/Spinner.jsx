@@ -1,8 +1,8 @@
-const Spinner = ({ size = "5erm" }) => {
-  return (
-    <div className="spinner">
-      <div className="loader" style={{ height: size }} />
-    </div>
-  );
-};
+
+const Spinner = () => {
+    return (
+        <div className="loader" />
+    );
+}
+
 export default Spinner;

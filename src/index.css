@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+#header {
+    background-image: url("./assets/bg-simplify-section-desktop.svg");
+}
+
+@media(max-width:576px) {
+    #header {
+        background-image: url("./assets/bg-simplify-section-mobile.svg");
+        background-repeat: no-repeat;
+    }
+}
