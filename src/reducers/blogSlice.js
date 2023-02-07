@@ -13,7 +13,11 @@ const initialState = {
             img: '/src/assets/designer-1.jpg',
             author: "ZYVvjYl33hgdgAplzN5Ef",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         },
@@ -26,7 +30,11 @@ const initialState = {
             img: '/src/assets/f67396fc3cfce63a28e07ebb35d974ac.jpg',
             author: "ebk1r3TBsfoaSp676MM8P",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         },
@@ -39,7 +47,11 @@ const initialState = {
             img: '/src/assets/fQwuyKJ9qxjSbr6REcgtmW-1200-80.jpg',
             author: "i-wyWufZdoWsKSEonYKV7",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         },
@@ -52,7 +64,11 @@ const initialState = {
             img: '/src/assets/graphic-design-trends.png',
             author: "6zzNuVQHsMSgwWSundXIC",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         },
@@ -65,7 +81,11 @@ const initialState = {
             img: '/src/assets/make-it-personal.jpg',
             author: "QhBw1TyICcR9xh5fQ4NyS",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         },
@@ -78,7 +98,11 @@ const initialState = {
             img: '/src/assets/Purple-Combination-colors-graphic-design-predictions-1024x576-1024x576.jpg',
             author: "YvPoGVTj79m-twPtBLpn4",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         },
@@ -91,7 +115,11 @@ const initialState = {
             img: '/src/assets/Synthwave-Postmodern.jpg',
             author: "ZYVvjYl33hgdgAplzN5Ef",
             reactions: {
-                heart: 0,
+                eyes: 0,
+                rocket: 0,
+                hooray: 0,
+                dislike: 0,
+                like: 0
             },
             showSetting: false
         }
@@ -102,20 +130,9 @@ const blogsSlice = createSlice({
     name: 'blogs',
     initialState,
     reducers: {
-        changeReaction: (state, action) => {
-            const {
-                blogId,
-                reaction
-            } = action.payload;
-            const existingBlog = state.blogs.find(blog => blog.id === blogId);
-            if (existingBlog) {
-                existingBlog.reactions[reaction]++;
-            }
-        },
         blogAdded: {
             reducer(state, action) {
                 state.blogs.push(action.payload);
-
             },
             prepare({
                 author,
@@ -133,7 +150,14 @@ const blogsSlice = createSlice({
                         category,
                         content,
                         created_at: new Date().toISOString(),
-                        showSetting: false
+                        showSetting: false,
+                        reactions: {
+                            eyes: 0,
+                            rocket: 0,
+                            hooray: 0,
+                            dislike: 0,
+                            like: 0
+                        }
                     }
                 }
             }
@@ -170,6 +194,16 @@ const blogsSlice = createSlice({
             } = action.payload;
             const existingBlog = state.blogs.find(blog => blog.id === id);
             existingBlog.showSetting = !existingBlog.showSetting;
+        },
+        reactionAdded: (state, action) => {
+            const {
+                blogId,
+                reaction
+            } = action.payload;
+            const existingBlog = state.blogs.find(blog => blog.id === blogId);
+            if (existingBlog) {
+                existingBlog.reactions[reaction]++;
+            }
         }
     }
 });
@@ -182,5 +216,6 @@ export const {
     blogAdded,
     blogEdited,
     blogDeleted,
-    toggleShowSetting
+    toggleShowSetting,
+    reactionAdded
 } = blogsSlice.actions;

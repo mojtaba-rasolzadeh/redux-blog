@@ -1,12 +1,10 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 // import { confirmAlert } from 'react-confirm-alert';
-
-
 import { selectAllBlogs, changeReaction, toggleShowSetting, blogDeleted } from '../reducers/blogSlice'
 import ShowAuthor from './ShowAuthor';
-import { useState } from 'react';
 import ConfirmDelete from './ConfirmDelete';
 import Settings from './Settings';
 import OverlayShowSettings from './OverlayShowSettings';
@@ -16,8 +14,6 @@ const Blog = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
-
-    console.log(showSettings)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
