@@ -1,8 +1,9 @@
-import { useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectBlogById } from '../reducers/blogSlice';
 import { GoBack } from '../components';
+import ShowAuthor from '../components/ShowAuthor';
 
 const Blog = () => {
     const { blogId } = useParams();
@@ -26,17 +27,7 @@ const Blog = () => {
                     <h2 className="text-3xl font-bold tracking-wider text-sky-700">{title}</h2>
                     <p className="text-sm text-slate-500">{content}</p>
                     <div className="flex items-end justify-between space-x-4">
-                        <div className='flex items-center space-x-4'>
-                            <img src={author.avatar_path} className="w-20 h-20 rounded-full bg-yellow-500 text-xs text-center" alt={author.name} />
-                            <div className="space-y-1">
-                                <h6 className="text-lg text-teal-900 font-bold tracking-wide">
-                                    {author.name}
-                                </h6>
-                                <p className="text-sm text-slate-500">
-                                    {new Date(created_at).toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' })}
-                                </p>
-                            </div>
-                        </div>
+                        <ShowAuthor {...blog} />
                         <div className="flex space-x-4">
                             {/* <div>
                                 <button onClick={() => dispatch(changeReaction({ blogId: id, reaction: 'heart' }))}>
