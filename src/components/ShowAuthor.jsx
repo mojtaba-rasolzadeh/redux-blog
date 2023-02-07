@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import {formatDistance,subDays} from 'date-fns';
+
 import { selectUserById } from "../reducers/userSlice";
 
 const ShowAuthor = ({ author, created_at }) => {
@@ -11,7 +13,11 @@ const ShowAuthor = ({ author, created_at }) => {
                     {user.name}
                 </h6>
                 <p className="text-sm text-slate-500">
-                    {new Date(created_at).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {
+                        // formatDistance(subDays(new Date(created_at).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' }),3),new Date(),{addSuffix:true})
+                        formatDistance(subDays(new Date(created_at),0),new Date(),{addSuffix:true})
+                        // formatDistance(subDays(new Date(), 3), new Date(), { addSuffix: true })
+                    }
                 </p>
             </div>
         </div>
