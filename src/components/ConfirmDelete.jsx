@@ -4,7 +4,7 @@ const ConfirmDelete = ({ showModal, onClose,deleBlog }) => {
     if (!showModal) return null;
     useLockBodyScroll()
     return (
-        <div className='fixed z-50 w-full h-full left-0 right-0 top-0 bottom-0 bg-white/70 backdrop-blur-sm' onClick={onClose}>
+        <div className='fixed z-50 w-full h-full left-0 right-0 bottom-0 bg-white/70 backdrop-blur-sm' onClick={onClose}>
             <div className="container mx-auto mt-56">
                 <div className="max-w-xl mx-auto bg-sky-500 text-center p-10 space-y-5 shadow-2xl rounded-sm" onClick={(e) => e.stopPropagation()}>
                     <h2 className="text-3xl font-bold text-white tracking-wider">Are you sure?</h2>

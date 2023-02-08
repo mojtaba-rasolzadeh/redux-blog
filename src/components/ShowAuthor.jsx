@@ -7,10 +7,10 @@ const ShowAuthor = ({ author, created_at }) => {
     const user = useSelector((state) => selectUserById(state, author));
     return (
         <div className='flex items-start space-x-4'>
-            <img src={user.avatar_path} className="w-14 h-14 rounded-full bg-yellow-500 text-xs text-center" alt={user.name} />
+            <img src={user && user.avatar_path} className="w-14 h-14 rounded-full bg-yellow-500 text-xs text-center" alt={user && user.name} />
             <div className="space-y-1">
                 <h6 className="text-base text-teal-900 font-bold tracking-wide">
-                    {user.name}
+                    {user && user.name}
                 </h6>
                 <div className="flex flex-col items-start space-x-1 sm:flex-row sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-teal-900">

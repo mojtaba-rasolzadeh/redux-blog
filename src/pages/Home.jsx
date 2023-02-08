@@ -29,7 +29,7 @@ const Home = () => {
             }
             <div onClick={handleClose}>
                 <Categories />
-                <Blog />
+                {/* <Blog /> */}
                 <Blogs />
             </div>
         </div>
