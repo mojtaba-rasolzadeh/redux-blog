@@ -4,6 +4,8 @@ import {
     nanoid
 } from '@reduxjs/toolkit';
 import {
+    createBlog,
+    deleteBlog,
     getAllBlogs
 } from '../services/blogsServices';
 
@@ -16,6 +18,16 @@ const initialState = {
 export const fetchBlogs = createAsyncThunk('/blogs/fetchBlogs', async() => {
     const response = await getAllBlogs();
     return response.data;
+});
+
+export const addBlog = createAsyncThunk('/blogs/addBlog', async initialBlog => {
+    const response = await createBlog(initialBlog);
+    return response.data;
+});
+
+export const deleteBlogApi = createAsyncThunk('/blogs/deleteBlogApi', async initialBlogId => {
+    await deleteBlog(initialBlogId);
+    return initialBlogId;
 })
 
 const blogsSlice = createSlice({
@@ -102,6 +114,13 @@ const blogsSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message;
             })
+            .addCase(addBlog.fulfilled, (state, action) => {
+                state.blogs.push(action.payload);
+            })
+            .addCase(deleteBlogApi.fulfilled, (state, action) => {
+                state.blogs = state.blogs.filter(blog => blog.id !== action.payload);
+            })
+
     }
 });
 

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { nanoid } from '@reduxjs/toolkit';
 
-import { selectAllBlogs, blogAdded } from '../reducers/blogSlice';
+import { selectAllBlogs, blogAdded, addBlog } from '../reducers/blogSlice';
 import bg1 from '../assets/man-taking-note.png';
 import { GoBack } from '../components';
 import { selectAllUsers } from '../reducers/userSlice';
@@ -15,6 +16,8 @@ const CreateBlog = () => {
     const [image, setImage] = useState("");
     const [content, setContent] = useState("");
 
+    const [requestStatus, setRequestStatus] = useState("idle");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -24,20 +27,40 @@ const CreateBlog = () => {
     const handleImageChange = (event) => setImage(event.target.value);
     const handleContentChange = (event) => setContent(event.target.value);
 
+    const canSave = [author, category, title, image, content].every(Boolean) && requestStatus === 'idle';
 
-    const canSave = [author, category, title, image, content].every(Boolean);
-
-    const handleSubmitForm = () => {
+    const handleSubmitForm = async () => {
         if (canSave) {
-            dispatch(blogAdded({ author: author, category, title, image, content }));
-            navigate('/');
-            toast.success('The blog was created !')
-            setAuthor("");
-            setCategory("");
-            setTitle("");
-            setImage("");
-            setContent("");
-
+            try {
+                setRequestStatus("pending");
+                await dispatch(addBlog({
+                    id: nanoid(),
+                    category,
+                    title,
+                    content,
+                    created_at: new Date().toISOString(),
+                    img: image,
+                    author,
+                    reactions: {
+                        eyes: 0,
+                        rocket: 0,
+                        hooray: 0,
+                        dislike: 0,
+                        like: 0
+                    }
+                }));
+                navigate('/');
+                toast.success('The blog was created !')
+                setAuthor("");
+                setCategory("");
+                setTitle("");
+                setImage("");
+                setContent("");
+            } catch (err) {
+                console.err('Failed to save the blog', err)
+            } finally {
+                setRequestStatus('idle');
+            }
         }
     }
 

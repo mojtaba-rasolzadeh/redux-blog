@@ -13,3 +13,15 @@ export const getBlog = (blogId) => {
     const url = `${SERVER_URL}/blogs/${blogId}`;
     return axios.get(url);
 }
+
+// create blog 
+export const createBlog = (blog) => {
+    const url = `${SERVER_URL}/blogs`;
+    return axios.post(url, blog);
+}
+
+// delete blog 
+export const deleteBlog = (blogId) => {
+    const url = `${SERVER_URL}/blogs/${blogId}`;
+    return axios.delete(url);
+}

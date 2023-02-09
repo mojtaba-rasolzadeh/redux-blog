@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { deleteBlogApi } from "../reducers/blogSlice";
 
 import ConfirmDelete from "./ConfirmDelete";
 import OverlayShowSettings from "./OverlayShowSettings";
@@ -13,6 +14,7 @@ const SingleBlog = ({ blog }) => {
     const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const handleOnShowModal = () => {
         setShowModal(true);
@@ -30,9 +32,12 @@ const SingleBlog = ({ blog }) => {
 
 
     const handleDeleteBlog = () => {
-        setShowModal(false);
-        navigate('/');
-        toast.error("The blog was deleted!");
+        if (blog) {
+            dispatch(deleteBlogApi(blog.id))
+            setShowModal(false);
+            navigate('/');
+            toast.error("The blog was deleted!");
+        }
     }
 
     return (
@@ -54,11 +59,9 @@ const SingleBlog = ({ blog }) => {
                         </button>
                     </div>
                 </div>
-
                 {showSettings && <Settings {...blog} handleOnShowModal={handleOnShowModal} onClose={handleClose} />}
-                {showSettings && <OverlayShowSettings onClose={handleClose} />}
+                {showSettings && <OverlayShowSettings onClose={() => setShowSettings(false)} />}
                 {showModal && <ConfirmDelete showModal={showModal} onClose={handleOnCloseModal} deleBlog={handleDeleteBlog} />}
-
             </div>
         </div>
     );
