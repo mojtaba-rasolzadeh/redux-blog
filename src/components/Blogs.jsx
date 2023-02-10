@@ -5,6 +5,18 @@ import { selectAllBlogs, fetchBlogs } from '../reducers/blogSlice';
 import Spinner from './spinner';
 import SingleBlog from './SingleBlog';
 
+const BlogList = ({ orderedBlogs }) => {
+    return (
+        <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 xl:grid-cols-4 mx-auto my-28 md:mt-16">
+            {
+                orderedBlogs.map((blog) => (
+                    <SingleBlog key={blog.id} blog={blog} />
+                ))
+            }
+        </div>
+    )
+}
+
 const Blogs = () => {
 
     const blogs = useSelector(selectAllBlogs);
@@ -12,6 +24,13 @@ const Blogs = () => {
     const dispatch = useDispatch();
 
     const orderedBlogs = blogs.slice().sort((a, b) => b.created_at.localeCompare(a.created_at));
+
+    let content;
+    if (blogStatus === 'loading') {
+        content = <Spinner />;
+    } else if (blogStatus === 'completed') {
+        content = <BlogList orderedBlogs={orderedBlogs} />
+    }
 
     useEffect(() => {
         if (blogStatus === 'idle') {
@@ -21,16 +40,7 @@ const Blogs = () => {
 
     return (
         <section>
-            {
-                blogStatus === 'loading' ? <Spinner /> :
-                    <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 xl:grid-cols-4 mx-auto my-28 md:mt-16">
-                        {
-                            orderedBlogs.map((blog) => (
-                                <SingleBlog key={blog.id} blog={blog} />
-                            ))
-                        }
-                    </div>
-            }
+            {content}
         </section>
     );
 }
