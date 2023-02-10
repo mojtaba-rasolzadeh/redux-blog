@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectAllBlogs, selectBlogById, blogEdited } from '../reducers/blogSlice';
+import { selectAllBlogs, selectBlogById, blogEdited, updateBlogApi } from '../reducers/blogSlice';
 import { selectAllUsers, selectUserById } from '../reducers/userSlice';
 import bg1 from '../assets/man-taking-note.png';
 import { GoBack } from '../components';
@@ -12,7 +12,7 @@ const EditBlog = () => {
     const { blogId } = useParams()
     const blog = useSelector((state) => selectBlogById(state, blogId));
 
-    const [author, setAuthor] = useState("");
+    const [author, setAuthor] = useState(blog.author);
     const [category, setCategory] = useState(blog.category);
     const [title, setTitle] = useState(blog.title);
     const [image, setImage] = useState(blog.img);
@@ -30,9 +30,24 @@ const EditBlog = () => {
 
     const canSave = [author, category, title, image, content].every(Boolean);
 
-    const handleSubmitForm = () => {
+    const handleSubmitForm = async () => {
         if (canSave) {
-            dispatch(blogEdited({ id: blogId, author, title, content, img: image, category }));
+            await dispatch(updateBlogApi({
+                id: blog.id,
+                category,
+                title,
+                content,
+                created_at: blog.created_at,
+                img: image,
+                author: author,
+                reactions: {
+                    eyes: 0,
+                    rocket: 0,
+                    hooray: 0,
+                    dislike: 0,
+                    like: 0
+                }
+            }));
             navigate('/');
             toast.warning('The blog was edited !');
         }
@@ -57,20 +72,20 @@ const EditBlog = () => {
                         <div className="mt-10 space-y-4">
                             <div>
                                 <label htmlFor="author" className="text-md font-bold text-teal-900">Author :</label>
-                                <select name="author" id="author" className='w-full py-2 focus:outline-none' onChange={handleAuthorChange}>
+                                <select name="author" id="author" className='w-full py-2 focus:outline-none' onChange={handleAuthorChange} defaultValue={author}>
                                     <option value="" className="text-slate-500" disabled>
                                         select author
                                     </option>
                                     {
                                         authors.map((user, index) => (
-                                            <option key={index} value={user.id}>{user.name}</option>
+                                            <option key={index} value={user.id} defaultValue={blog.author}>{user.name}</option>
                                         ))
                                     }
                                 </select>
                             </div>
                             <div>
                                 <label htmlFor="category" className="text-md font-bold text-teal-900">Category :</label>
-                                <select name="category" id="category" className='w-full py-2 focus:outline-none' onChange={handleCategoryChange}>
+                                <select name="category" id="category" className='w-full py-2 focus:outline-none' onChange={handleCategoryChange} defaultValue={category}>
                                     <option value="" className="text-slate-500" disabled>
                                         select category
                                     </option>

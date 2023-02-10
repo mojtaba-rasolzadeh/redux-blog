@@ -6,7 +6,8 @@ import {
 import {
     createBlog,
     deleteBlog,
-    getAllBlogs
+    getAllBlogs,
+    updateBlog
 } from '../services/blogsServices';
 
 const initialState = {
@@ -28,7 +29,12 @@ export const addBlog = createAsyncThunk('/blogs/addBlog', async initialBlog => {
 export const deleteBlogApi = createAsyncThunk('/blogs/deleteBlogApi', async initialBlogId => {
     await deleteBlog(initialBlogId);
     return initialBlogId;
-})
+});
+
+export const updateBlogApi = createAsyncThunk('/blogs/updateBlogApi', async initialBlog => {
+    const response = await updateBlog(initialBlog, initialBlog.id);
+    return response.data;
+});
 
 const blogsSlice = createSlice({
     name: 'blogs',
@@ -119,6 +125,14 @@ const blogsSlice = createSlice({
             })
             .addCase(deleteBlogApi.fulfilled, (state, action) => {
                 state.blogs = state.blogs.filter(blog => blog.id !== action.payload);
+            })
+            .addCase(updateBlogApi.fulfilled, (state, action) => {
+                const {
+                    id
+                } = action.payload;
+                const updateBlogIndex = state.blogs.findIndex(blog => blog.id === id);
+                state.blogs[updateBlogIndex] = action.payload;
+                console.log(state.blogs[updateBlogIndex]);
             })
 
     }

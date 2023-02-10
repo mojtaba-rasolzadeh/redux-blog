@@ -25,3 +25,9 @@ export const deleteBlog = (blogId) => {
     const url = `${SERVER_URL}/blogs/${blogId}`;
     return axios.delete(url);
 }
+
+// update blog
+export const updateBlog = (blog, blogId) => {
+    const url = `${SERVER_URL}/blogs/${blogId}`;
+    return axios.put(url, blog)
+}
