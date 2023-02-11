@@ -8,6 +8,7 @@ import Blog from "../pages/Blog";
 import CreateBlog from "../pages/CreateBlog";
 import EditBlog from "../pages/EditBlog";
 import Authors from "../pages/Authors";
+import AuthorPage from "../pages/AuthorPage";
 
 export const router = createBrowserRouter([{
     paht: "/",
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([{
     {
         path: '/authors',
         element: <Authors />
+    },
+    {
+        path:'/authors/:authorId',
+        element:<AuthorPage />
     }
     ]
 }])

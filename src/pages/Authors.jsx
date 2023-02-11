@@ -5,7 +5,7 @@ import { selectAllUsers } from "../reducers/userSlice";
 
 const Authors = () => {
     const authors = useSelector(selectAllUsers);
-    console.log(authors);
+    
     return (
         <section>
             <div className="container mx-auto p-6">
@@ -13,12 +13,12 @@ const Authors = () => {
                 <div className="flex items-center flex-wrap gap-5 mt-10">
                     {
                         authors.map((author) => (
-                            <article key={author.id} className="w-80 flex items-center space-x-3">
+                            <article key={author.id} className="w-40 flex items-center space-x-3 md:w-52">
                                 <Link to={`/authors/${author.id}`}>
-                                    <img src={author.avatar_path} className="h-16 w-16 rounded-full" alt={author.name} />
+                                    <img src={author.avatar_path} className="h-16 w-16 rounded-full border-2 border-emerald-600" alt={author.name} />
                                 </Link>
                                 <Link to={`/authors/${author.id}`}>
-                                    <h2 className="text-sm">{author.name}</h2>
+                                    <h2 className="text-sm hover:text-slate-600">{author.name}</h2>
                                 </Link>
                             </article>
                         ))
