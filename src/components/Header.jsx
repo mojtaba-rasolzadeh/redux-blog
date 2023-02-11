@@ -11,9 +11,7 @@ const Header = () => {
                     <NavLink to="/" className="text-md text-white tracking-wider hover:text-slate-200">Home</NavLink>
                     <NavLink to={`/authors`} className="text-md text-white tracking-wider hover:text-slate-200" >Authors</NavLink>
                 </div>
-                {location.pathname === '/' &&
-                    <SearchBox />
-                }
+                <SearchBox />
             </div>
         </header>
     );
