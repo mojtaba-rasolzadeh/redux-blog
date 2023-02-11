@@ -23,7 +23,7 @@ const Blogs = () => {
     const blogStatus = useSelector(state => state.blogs.status);
     const dispatch = useDispatch();
 
-    const orderedBlogs = blogs.slice().sort((a, b) => b.created_at.localeCompare(a.created_at));
+    const orderedBlogs = blogs.slice().sort((a, b) => b.created_at && b.created_at.localeCompare(a.created_at));
 
     let content;
     if (blogStatus === 'loading') {

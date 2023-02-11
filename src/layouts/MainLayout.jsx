@@ -8,7 +8,8 @@ const MainLayout = () => {
 
     return (
         <>
-            {location.pathname === '/' && <Header />}
+            {/* {location.pathname === '/' && <Header />} */}
+            <Header />
             <div>
                 <Outlet />
             </div>

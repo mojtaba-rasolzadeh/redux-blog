@@ -7,6 +7,7 @@ import MainLayout from "../layouts/MainLayout";
 import Blog from "../pages/Blog";
 import CreateBlog from "../pages/CreateBlog";
 import EditBlog from "../pages/EditBlog";
+import Authors from "../pages/Authors";
 
 export const router = createBrowserRouter([{
     paht: "/",
@@ -17,8 +18,8 @@ export const router = createBrowserRouter([{
         element: < App />
     },
     {
-        path:'blogs/create-blog',
-        element:<CreateBlog/>
+        path: 'blogs/create-blog',
+        element: <CreateBlog />
     },
     {
         path: '/blog/:blogId',
@@ -26,8 +27,12 @@ export const router = createBrowserRouter([{
         // errorElement:<NotFound />
     },
     {
-        path:'/edit-blog/:blogId',
-        element:<EditBlog />
+        path: '/edit-blog/:blogId',
+        element: <EditBlog />
+    },
+    {
+        path: '/authors',
+        element: <Authors />
     }
-]
+    ]
 }])
