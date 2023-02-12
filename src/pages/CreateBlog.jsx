@@ -6,7 +6,7 @@ import { nanoid } from '@reduxjs/toolkit';
 
 import { selectAllBlogs, blogAdded, addBlog } from '../reducers/blogSlice';
 import bg1 from '../assets/man-taking-note.png';
-import { GoBack } from '../components';
+import BackToMain from '../components/BackToMain';
 import { selectAllUsers } from '../reducers/userSlice';
 
 const CreateBlog = () => {
@@ -72,7 +72,7 @@ const CreateBlog = () => {
 
     return (
         <section>
-            <GoBack />
+            <BackToMain text="Go Back" link="/" />
             <div className="container mx-auto mt-2 mb-10 space-y-12 flex flex-col lg:space-x-4 lg:flex-row lg:items-end">
                 <div className="w-full hidden md:block lg:w-1/2">
                     <img src={bg1} alt="" />
@@ -107,10 +107,10 @@ const CreateBlog = () => {
                                     }
                                 </select>
                             </div>
-                            <input type="text" id="title" name="title" placeholder="title..." className="w-full p-3 tracking-wide border border-teal-900 rounded-md focus:outline-none focus:border-teal-500" value={title} onChange={handleTitleChange} />
-                            <input type="url" alt="" placeholder="image..." className="w-full p-3 tracking-wide border border-teal-900 rounded-md focus:outline-none focus:border-teal-500" value={image} onChange={handleImageChange} />
-                            <textarea id="content" name="content" rows="10" placeholder="content..." className="w-full p-3 tracking-wide border border-teal-900 rounded-md focus:outline-none focus:border-teal-500" value={content} onChange={handleContentChange} />
-                            <button type="button" className={`text-xl text-white tracking-wider ${!canSave ? 'bg-teal-200' : 'bg-teal-400 hover:bg-teal-500'} p-3 w-full rounded-md`} onClick={handleSubmitForm} disabled={!canSave}>Submit</button>
+                            <input type="text" id="title" name="title" placeholder="title..." className="w-full p-3 tracking-wide border border-blue-900 rounded-md focus:outline-none focus:border-blue-500" value={title} onChange={handleTitleChange} />
+                            <input type="url" alt="" placeholder="image..." className="w-full p-3 tracking-wide border border-blue-900 rounded-md focus:outline-none focus:border-blue-500" value={image} onChange={handleImageChange} />
+                            <textarea id="content" name="content" rows="10" placeholder="content..." className="w-full p-3 tracking-wide border border-blue-900 rounded-md focus:outline-none focus:border-blue-500" value={content} onChange={handleContentChange} />
+                            <button type="button" className={`text-xl text-white tracking-wider ${!canSave ? 'bg-blue-200' : 'bg-blue-400 hover:bg-blue-500'} p-3 w-full rounded-md`} onClick={handleSubmitForm} disabled={!canSave}>Submit</button>
                         </div>
                     </form>
                 </div>

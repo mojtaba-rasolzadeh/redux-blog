@@ -7,7 +7,7 @@ const ShowAuthor = ({ author, created_at }) => {
     const user = useSelector((state) => selectUserById(state, author));
     return (
         <div className='flex items-start space-x-4'>
-            <img src={user && user.avatar_path} className="w-14 h-14 rounded-full bg-yellow-500 text-xs text-center" alt={user && user.name} />
+            <img src={user && user.avatar_path} className="w-14 h-14 rounded-full bg-yellow-500 text-xs text-center border-2 border-emerald-700" alt={user && user.name} />
             <div className="space-y-1">
                 <h6 className="text-base text-teal-900 font-bold tracking-wide">
                     {user && user.name}

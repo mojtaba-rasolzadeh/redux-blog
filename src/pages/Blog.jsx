@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectBlogById } from '../reducers/blogSlice';
-import { GoBack } from '../components';
+import BackToMain from '../components/BackToMain';
 import ShowAuthor from '../components/ShowAuthor';
 import ReactionButton from '../components/ReactionButton';
 
@@ -14,7 +14,7 @@ const Blog = () => {
     return (
         <section className="relative h-screen w-screen overflow-x-hidden">
             <div className="absolute -z-0 bg-teal-500 h-full w-full rotate-45 translate-x-1/2 -translate-y-1/2" />
-            <GoBack />
+            <BackToMain text="go back" link="/" />
             <div className="container flex flex-col z-40 mx-auto bg-white mt-4 lg:h-5/6 drop-shadow-2xl lg:border lg:border-teal-500 rounded-sm lg:flex-row">
                 <div className="lg:w-2/5 h-full">
                     <img src={img} className="h-full rounded-t-sm lg:rounded-tl-sm lg:rounded-tb-sm" alt={title} />

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const SERVER_URL = 'http://localhost:9000';
 
-// get blogs
+// get all blogs
 export const getAllBlogs = () => {
     const url = `${SERVER_URL}/blogs`;
     return axios.get(url)
@@ -30,4 +30,10 @@ export const deleteBlog = (blogId) => {
 export const updateBlog = (blog, blogId) => {
     const url = `${SERVER_URL}/blogs/${blogId}`;
     return axios.put(url, blog)
+}
+
+// get all authors
+export const getAllAuthors = () => {
+    const url = `${SERVER_URL}/users`;
+    return axios.get(url);
 }

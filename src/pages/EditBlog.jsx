@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectAllBlogs, selectBlogById, blogEdited, updateBlogApi } from '../reducers/blogSlice';
 import { selectAllUsers, selectUserById } from '../reducers/userSlice';
 import bg1 from '../assets/man-taking-note.png';
-import { GoBack } from '../components';
+import BackToMain from '../components/BackToMain';
 import { toast } from 'react-toastify';
 
 const EditBlog = () => {
@@ -61,7 +61,7 @@ const EditBlog = () => {
 
     return (
         <section>
-            <GoBack />
+            <BackToMain text="Go Back" link="/" />
             <div className="container mx-auto mt-2 mb-10 space-y-12 flex flex-col lg:space-x-4 lg:flex-row lg:items-end">
                 <div className="w-full hidden md:block lg:w-1/2">
                     <img src={bg1} alt="" />

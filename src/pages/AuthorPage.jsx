@@ -36,12 +36,16 @@ const AuthorPage = () => {
                         </div>
                         <div className="flex">
                             <div className="w-1/3">
-                                <img src={author.avatar_path} className="rounded-md" alt={author.name} />
+                                <img src={author.avatar_path} className="rounded-md border border-emerald-600" alt={author.name} />
                             </div>
                             <div className="w-2/3 p-2 space-y-3">
-                                <h5 className="text-slate-900">name : <span className="capitalize">{author.name}</span></h5>
+                                <div>
+                                    <h5 className="inline-block text-slate-900 border-b border-pink-500 pb-2">name : </h5>
+                                    {" "}
+                                    <span className="capitalize">{author.name}</span>
+                                </div>
                                 <div className="">
-                                    <p className="mb-3">blogs : </p>
+                                    <p className="inline-block mb-3 border-b border-pink-500 pb-2">blogs : </p>
                                     <ul className="pl-6">
                                         {
                                             authorBlogs.map((blog) => (
