@@ -50,7 +50,7 @@ const CreateBlog = () => {
                     }
                 }));
                 navigate('/');
-                toast.success('The blog was created !')
+                toast.success('The blog was created !');
                 setAuthor("");
                 setCategory("");
                 setTitle("");

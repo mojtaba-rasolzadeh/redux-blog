@@ -61,7 +61,7 @@ const SingleBlog = ({ blog }) => {
                 </div>
                 {showSettings && <Settings {...blog} handleOnShowModal={handleOnShowModal} onClose={handleClose} />}
                 {showSettings && <OverlayShowSettings onClose={() => setShowSettings(false)} />}
-                {showModal && <ConfirmDelete showModal={showModal} onClose={handleOnCloseModal} deleBlog={handleDeleteBlog} />}
+                {showModal && <ConfirmDelete showModal={showModal} onClose={handleOnCloseModal} text="blog" deleteItem={handleDeleteBlog} />}
             </div>
         </div>
     );
