@@ -37,3 +37,9 @@ export const getAllAuthors = () => {
     const url = `${SERVER_URL}/users`;
     return axios.get(url);
 }
+
+// create author
+export const createAuthor = (author) => {
+    const url = `${SERVER_URL}/users`;
+    return axios.post(url, author);
+}

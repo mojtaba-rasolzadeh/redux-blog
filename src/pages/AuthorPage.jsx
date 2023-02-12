@@ -1,15 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchBlogs, selectAllBlogs } from "../reducers/blogSlice";
 import { selectUserById } from "../reducers/userSlice";
-import { useEffect } from "react";
 import Spinner from "../components/spinner";
 import BackToMain from "../components/BackToMain";
 
 const AuthorPage = () => {
     const { authorId } = useParams();
     const dispatch = useDispatch();
+
+  
 
     const author = useSelector((state) => selectUserById(state, authorId));
     const blogStatus = useSelector(state => state.blogs.status);
