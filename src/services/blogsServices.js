@@ -43,3 +43,9 @@ export const createAuthor = (author) => {
     const url = `${SERVER_URL}/users`;
     return axios.post(url, author);
 }
+
+// delete author
+export const deleteAuthor = (authorId) => {
+    const url = `${SERVER_URL}/users/${authorId}`;
+    return axios.delete(url);
+}

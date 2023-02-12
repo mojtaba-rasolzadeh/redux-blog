@@ -4,6 +4,7 @@ import {
 } from '@reduxjs/toolkit';
 import {
     createAuthor,
+    deleteAuthor,
     getAllAuthors
 } from '../services/blogsServices';
 
@@ -17,6 +18,11 @@ export const addAuthor = createAsyncThunk('/authors/addAuthor', async initialAut
     return response.data;
 });
 
+export const deleteAuthorApi = createAsyncThunk('/authors/deleteAuthorApi', async initialAuthorId => {
+    await deleteAuthor(initialAuthorId);
+    return initialAuthorId;
+})
+
 const userSlice = createSlice({
     name: 'users',
     initialState: [],
@@ -28,6 +34,9 @@ const userSlice = createSlice({
             })
             .addCase(addAuthor.fulfilled, (state, action) => {
                 state.push(action.payload);
+            })
+            .addCase(deleteAuthorApi.fulfilled, (state, action) => {
+                return state.filter(author => author.id !== action.payload);
             })
     }
 });
