@@ -1,5 +1,6 @@
 import {
     createAsyncThunk,
+    createSelector,
     createSlice,
     nanoid
 } from '@reduxjs/toolkit';
@@ -140,6 +141,10 @@ const blogsSlice = createSlice({
 
 export const selectAllBlogs = state => state.blogs.blogs;
 export const selectBlogById = (state, blogId) => state.blogs.blogs.find(blog => blog.id === blogId);
+export const selectAuthorBlogs = createSelector(
+    [selectAllBlogs, (_, authorId) => authorId], (blogs, authorId) => blogs.filter(blog => blog.author === authorId)
+);
+
 export default blogsSlice.reducer;
 export const {
     changeReaction,

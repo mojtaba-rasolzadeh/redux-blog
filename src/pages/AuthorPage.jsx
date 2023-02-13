@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchBlogs, selectAllBlogs } from "../reducers/blogSlice";
+import { fetchBlogs, selectAllBlogs, selectAuthorBlogs } from "../reducers/blogSlice";
 import { selectUserById } from "../reducers/userSlice";
 import Spinner from "../components/spinner";
 import BackToMain from "../components/BackToMain";
@@ -11,15 +11,12 @@ const AuthorPage = () => {
     const { authorId } = useParams();
     const dispatch = useDispatch();
 
-  
+
 
     const author = useSelector((state) => selectUserById(state, authorId));
     const blogStatus = useSelector(state => state.blogs.status);
 
-    const authorBlogs = useSelector(state => {
-        const allBlogs = selectAllBlogs(state);
-        return allBlogs.filter(blog => blog.author === authorId);
-    });
+    const authorBlogs = useSelector(state => selectAuthorBlogs(state,authorId));
 
     useEffect(() => {
         dispatch(fetchBlogs());
@@ -42,12 +39,12 @@ const AuthorPage = () => {
                             </div>
                             <div className="w-2/3 p-2 space-y-3">
                                 <div>
-                                    <h5 className="inline-block text-slate-900 border-b border-pink-500 pb-2">name : </h5>
+                                    <h5 className="inline-block text-slate-900 font-bold tracking-wider border-b border-pink-500 pb-2">name : </h5>
                                     {" "}
                                     <span className="capitalize">{author.name}</span>
                                 </div>
                                 <div className="">
-                                    <p className="inline-block mb-3 border-b border-pink-500 pb-2">blogs : </p>
+                                    <p className="inline-block mb-3 border-b font-bold tracking-wider border-pink-500 pb-2">blogs : </p>
                                     <ul className="pl-6">
                                         {
                                             authorBlogs.map((blog) => (
