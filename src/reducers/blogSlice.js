@@ -2,7 +2,8 @@ import {
     createAsyncThunk,
     createSelector,
     createSlice,
-    nanoid
+    nanoid,
+    createEntityAdapter
 } from '@reduxjs/toolkit';
 import {
     createBlog,
@@ -11,11 +12,14 @@ import {
     updateBlog
 } from '../services/blogsServices';
 
-const initialState = {
-    blogs: [],
+const blogAdapter = createEntityAdapter({
+    // sortComparer: (a, b) => b.date.localeCompare(a.date),
+});
+
+const initialState = blogAdapter.getInitialState({
     status: 'idle',
     error: null
-}
+});
 
 export const fetchBlogs = createAsyncThunk('/blogs/fetchBlogs', async() => {
     const response = await getAllBlogs();
@@ -110,37 +114,29 @@ const blogsSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchBlogs.pending, (state, action) => {
+        builder.addCase(fetchBlogs.pending, (state, _) => {
                 state.status = 'loading';
             })
             .addCase(fetchBlogs.fulfilled, (state, action) => {
                 state.status = 'completed';
-                state.blogs = action.payload;
+                blogAdapter.upsertMany(state, action.payload);
             })
             .addCase(fetchBlogs.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             })
-            .addCase(addBlog.fulfilled, (state, action) => {
-                state.blogs.push(action.payload);
-            })
-            .addCase(deleteBlogApi.fulfilled, (state, action) => {
-                state.blogs = state.blogs.filter(blog => blog.id !== action.payload);
-            })
-            .addCase(updateBlogApi.fulfilled, (state, action) => {
-                const {
-                    id
-                } = action.payload;
-                const updateBlogIndex = state.blogs.findIndex(blog => blog.id === id);
-                state.blogs[updateBlogIndex] = action.payload;
-                console.log(state.blogs[updateBlogIndex]);
-            })
+            .addCase(addBlog.fulfilled, blogAdapter.addOne)
+            .addCase(deleteBlogApi.fulfilled, blogAdapter.removeOne)
+            .addCase(updateBlogApi.fulfilled, blogAdapter.updateOne)
 
     }
 });
 
-export const selectAllBlogs = state => state.blogs.blogs;
-export const selectBlogById = (state, blogId) => state.blogs.blogs.find(blog => blog.id === blogId);
+export const {
+    selectAll: selectAllBlogs,
+    selectById: selectBlogById,
+} = blogAdapter.getSelectors(state => state.blogs);
+
 export const selectAuthorBlogs = createSelector(
     [selectAllBlogs, (_, authorId) => authorId], (blogs, authorId) => blogs.filter(blog => blog.author === authorId)
 );
