@@ -2,7 +2,6 @@ import {
     createAsyncThunk,
     createSelector,
     createSlice,
-    nanoid,
     createEntityAdapter
 } from '@reduxjs/toolkit';
 import {
@@ -45,63 +44,6 @@ const blogsSlice = createSlice({
     name: 'blogs',
     initialState,
     reducers: {
-        blogAdded: {
-            reducer(state, action) {
-                state.blogs.push(action.payload);
-            },
-            prepare({
-                author,
-                title,
-                img,
-                category,
-                content
-            }) {
-                return {
-                    payload: {
-                        id: nanoid(),
-                        author,
-                        title,
-                        img,
-                        category,
-                        content,
-                        created_at: new Date().toISOString(),
-                        reactions: {
-                            eyes: 0,
-                            rocket: 0,
-                            hooray: 0,
-                            dislike: 0,
-                            like: 0
-                        }
-                    }
-                }
-            }
-        },
-        blogEdited: (state, action) => {
-            const {
-                id,
-                title,
-                author,
-                category,
-                img,
-                content
-            } = action.payload;
-            const existingBlog = state.blogs.find(blog => blog.id === id);
-            if (existingBlog) {
-                console.log(author);
-                existingBlog.author = author;
-                existingBlog.title = title;
-                existingBlog.category = category;
-                existingBlog.img = img;
-                existingBlog.content = content;
-            }
-        },
-        blogDeleted: (state, action) => {
-            const {
-                id
-            } = action.payload;
-            state.blogs = state.blogs.filter(blog => blog.id !== id);
-
-        },
         reactionAdded: (state, action) => {
             const {
                 blogId,
