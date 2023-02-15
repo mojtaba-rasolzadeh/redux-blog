@@ -1,36 +1,45 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-import { selectBlogById } from '../reducers/blogSlice';
+import { useGetBlogQuery } from '../api/apiSlice';
 import BackToMain from '../components/BackToMain';
 import ShowAuthor from '../components/ShowAuthor';
 import ReactionButton from '../components/ReactionButton';
+import Spinner from '../components/spinner';
 
 const Blog = () => {
     const { blogId } = useParams();
-    const blog = useSelector((state) => selectBlogById(state, blogId));
-    const { img, category, title, content } = blog;
+    const { data: blog, isLoading, isSuccess } = useGetBlogQuery(blogId);
+
+    let content;
+    if (isLoading) {
+        content = <Spinner />
+    } else if (isSuccess) {
+        content =
+            <>
+                <div className="absolute -z-0 bg-teal-500 h-full w-full rotate-45 translate-x-1/2 -translate-y-1/2" />
+                <BackToMain text="go back" link="/" />
+                <div className="container flex flex-col z-40 mx-auto bg-white mt-4 lg:h-5/6 drop-shadow-2xl lg:border lg:border-teal-500 rounded-sm lg:flex-row">
+                    <div className="lg:w-2/5 h-full">
+                        <img src={blog.img} className="h-full rounded-t-sm lg:rounded-tl-sm lg:rounded-tb-sm" alt={blog.title} />
+                    </div>
+                    <div className="lg:w-3/5 h-full p-8">
+                        <div className="h-full flex flex-col justify-between space-y-20">
+                            <div className='space-y-6'>
+                                <h6 className="inline-block text-xl text-white tracking-wider bg-red-700 rounded-full px-5 py-1">{blog.category}</h6>
+                                <h2 className="text-3xl font-bold tracking-wider text-sky-700">{blog.title}</h2>
+                                <p className="text-sm text-justify text-slate-500">{blog.content}</p>
+                                <ReactionButton {...blog} />
+                            </div>
+                            <ShowAuthor {...blog} />
+                        </div>
+                    </div>
+                </div>
+            </>
+    }
 
     return (
         <section className="relative h-screen w-screen overflow-x-hidden">
-            <div className="absolute -z-0 bg-teal-500 h-full w-full rotate-45 translate-x-1/2 -translate-y-1/2" />
-            <BackToMain text="go back" link="/" />
-            <div className="container flex flex-col z-40 mx-auto bg-white mt-4 lg:h-5/6 drop-shadow-2xl lg:border lg:border-teal-500 rounded-sm lg:flex-row">
-                <div className="lg:w-2/5 h-full">
-                    <img src={img} className="h-full rounded-t-sm lg:rounded-tl-sm lg:rounded-tb-sm" alt={title} />
-                </div>
-                <div className="lg:w-3/5 h-full p-8">
-                    <div className="h-full flex flex-col justify-between space-y-20">
-                        <div className='space-y-6'>
-                            <h6 className="inline-block text-xl text-white tracking-wider bg-red-700 rounded-full px-5 py-1">{category}</h6>
-                            <h2 className="text-3xl font-bold tracking-wider text-sky-700">{title}</h2>
-                            <p className="text-sm text-justify text-slate-500">{content}</p>
-                            <ReactionButton {...blog} />
-                        </div>
-                        <ShowAuthor {...blog} />
-                    </div>
-                </div>
-            </div>
+            {content}
         </section >
     );
 }
