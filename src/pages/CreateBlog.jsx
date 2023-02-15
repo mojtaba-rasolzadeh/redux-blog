@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { nanoid } from '@reduxjs/toolkit';
 
-import { selectAllBlogs, blogAdded, addBlog } from '../reducers/blogSlice';
+import { useAddNewBlogMutation, useGetBlogsQuery } from '../api/apiSlice';
 import bg1 from '../assets/man-taking-note.png';
 import BackToMain from '../components/BackToMain';
 import { selectAllUsers } from '../reducers/userSlice';
@@ -16,9 +16,8 @@ const CreateBlog = () => {
     const [image, setImage] = useState("");
     const [content, setContent] = useState("");
 
-    const [requestStatus, setRequestStatus] = useState("idle");
+    const [addBlog, { isLoading }] = useAddNewBlogMutation();
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleAuthorChange = (event) => setAuthor(event.target.value);
@@ -27,13 +26,12 @@ const CreateBlog = () => {
     const handleImageChange = (event) => setImage(event.target.value);
     const handleContentChange = (event) => setContent(event.target.value);
 
-    const canSave = [author, category, title, image, content].every(Boolean) && requestStatus === 'idle';
+    const canSave = [author, category, title, image, content].every(Boolean) && !isLoading;
 
     const handleSubmitForm = async () => {
         if (canSave) {
             try {
-                setRequestStatus("pending");
-                await dispatch(addBlog({
+                await addBlog({
                     id: nanoid(),
                     category,
                     title,
@@ -48,7 +46,7 @@ const CreateBlog = () => {
                         dislike: 0,
                         like: 0
                     }
-                }));
+                }).unwrap()
                 navigate('/');
                 toast.success('The blog was created !');
                 setAuthor("");
@@ -58,17 +56,15 @@ const CreateBlog = () => {
                 setContent("");
             } catch (err) {
                 console.err('Failed to save the blog', err)
-            } finally {
-                setRequestStatus('idle');
             }
         }
     }
 
-    const blogs = useSelector(selectAllBlogs);
+    const { data: blogs = [] } = useGetBlogsQuery();
     const blogCategory = new Set(blogs.map((blog) => blog.category));
     const uniqueBlogCategroy = [...blogCategory];
 
-    const authors = useSelector(selectAllUsers)
+    const authors = useSelector(selectAllUsers);
 
     return (
         <section>
