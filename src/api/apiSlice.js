@@ -12,10 +12,22 @@ export const apiSlice = createApi({
     endpoints: (builder) => ({
         getBlogs: builder.query({
             query: () => '/blogs',
-            providesTags: ['Blog']
+            providesTags: (result, error, arg) => [
+                'Blog',
+                ...result.map(({
+                    id
+                }) => ({
+                    type: 'Blog',
+                    id
+                }))
+            ]
         }),
         getBlog: builder.query({
-            query: (initialBlogId) => `/blogs/${initialBlogId}`
+            query: (initialBlogId) => `/blogs/${initialBlogId}`,
+            providesTags: (result, error, arg) => [{
+                type: 'Blog',
+                id: arg
+            }]
         }),
         addNewBlog: builder.mutation({
             query: (initialBlog) => ({
@@ -23,7 +35,7 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: initialBlog
             }),
-            invalidatesTags: ['Blog']
+            invalidatesTags: ['Blog'],
         }),
         editBlog: builder.mutation({
             query: (initialBlog) => ({
@@ -31,6 +43,10 @@ export const apiSlice = createApi({
                 method: 'PUT',
                 body: initialBlog
             }),
+            invalidatesTags: (result, error, arg) => ({
+                type: 'Blog',
+                id: arg.id
+            })
         })
     })
 })
