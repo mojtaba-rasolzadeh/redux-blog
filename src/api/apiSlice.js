@@ -8,16 +8,16 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:9000'
     }),
-    tagTypes: ['Blog'],
+    tagTypes: ['BLOG'],
     endpoints: (builder) => ({
         getBlogs: builder.query({
             query: () => '/blogs',
             providesTags: (result, error, arg) => [
-                'Blog',
+                'BLOG',
                 ...result.map(({
                     id
                 }) => ({
-                    type: 'Blog',
+                    type: 'BLOG',
                     id
                 }))
             ]
@@ -25,7 +25,7 @@ export const apiSlice = createApi({
         getBlog: builder.query({
             query: (initialBlogId) => `/blogs/${initialBlogId}`,
             providesTags: (result, error, arg) => [{
-                type: 'Blog',
+                type: 'BLOG',
                 id: arg
             }]
         }),
@@ -35,7 +35,7 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: initialBlog
             }),
-            invalidatesTags: ['Blog'],
+            invalidatesTags: ['BLOG'],
         }),
         editBlog: builder.mutation({
             query: (initialBlog) => ({
@@ -43,11 +43,14 @@ export const apiSlice = createApi({
                 method: 'PUT',
                 body: initialBlog
             }),
-            invalidatesTags: (result, error, arg) => ({
-                type: 'Blog',
+            invalidatesTags: (result, error, arg) => [{
+                type: 'BLOG',
                 id: arg.id
-            })
-        })
+            }]
+        }),
+        getAuthors: builder.query({
+            query: () => '/users'
+        }),
     })
 })
 

@@ -1,26 +1,25 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { useGetBlogQuery, useEditBlogMutation } from '../api/apiSlice';
-import { selectAllBlogs, selectBlogById, blogEdited, updateBlogApi } from '../reducers/blogSlice';
-import { selectAllUsers, selectUserById } from '../reducers/userSlice';
+import { useGetBlogsQuery, useGetBlogQuery, useEditBlogMutation } from '../api/apiSlice';
+import { selectAllUsers } from '../reducers/userSlice';
 import bg1 from '../assets/man-taking-note.png';
 import BackToMain from '../components/BackToMain';
 
 const EditBlog = () => {
-    const { blogId } = useParams()
-    const { data: blog = [], isLoading, isSuccess } = useGetBlogQuery(blogId)
+    const { blogId } = useParams();
+    const { data: blogs } = useGetBlogsQuery();
+    const { data: blog, isLoading, isSuccess } = useGetBlogQuery(blogId);
     const [updateBlog] = useEditBlogMutation();
-    
-    console.log(blog);
 
     const [author, setAuthor] = useState(blog?.author);
     const [category, setCategory] = useState(blog?.category);
     const [title, setTitle] = useState(blog?.title);
     const [image, setImage] = useState(blog?.img);
     const [content, setContent] = useState(blog?.content);
+
 
     const navigate = useNavigate();
 
@@ -56,8 +55,7 @@ const EditBlog = () => {
         }
     }
 
-    const blogs = useSelector(selectAllBlogs);
-    const blogCategory = new Set(blogs.map((blog) => blog.category));
+    const blogCategory = new Set(blogs?.map((blog) => blog.category));
     const uniqueBlogCategroy = [...blogCategory];
 
     const authors = useSelector(selectAllUsers);

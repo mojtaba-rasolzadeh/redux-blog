@@ -20,4 +20,5 @@ export const store = configureStore({
         getDefaultMiddleware().concat(apiSlice.middleware)
 });
 
-store.dispatch(fetchAuthors());
+// store.dispatch(fetchAuthors());
+store.dispatch(apiSlice.endpoints.getAuthors.initiate());

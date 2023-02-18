@@ -1,19 +1,37 @@
 import {
     createAsyncThunk,
     createSlice,
-    createEntityAdapter
+    createEntityAdapter,
+    createSelector
 } from '@reduxjs/toolkit';
+import {
+    apiSlice
+} from '../api/apiSlice';
 import {
     createAuthor,
     deleteAuthor,
     getAllAuthors
 } from '../services/blogsServices';
 
+export const selectUsersResult = apiSlice.endpoints.getAuthors.select();
+const emptyUsers = [];
+
+export const selectAllUsers = createSelector(
+    selectUsersResult,
+    (usersResult) => usersResult?.data ?? emptyUsers
+);
+
+export const selectUserById = createSelector(
+    selectAllUsers,
+    (state, userId) => userId,
+    (users, userId) => users.find(user => user.id === userId)
+);
+
 const userAdapter = createEntityAdapter();
 
 const initialState = userAdapter.getInitialState();
 
-export const fetchAuthors = createAsyncThunk('/authors/fetchAuthors', async() => {
+export const fetchAuthors = createAsyncThunk('/authors/fetchAuthors', async () => {
     const response = await getAllAuthors();
     return response.data;
 });
@@ -40,9 +58,9 @@ const userSlice = createSlice({
     }
 });
 
-export const {
-    selectAll: selectAllUsers,
-    selectById: selectUserById,
-} = userAdapter.getSelectors(state => state.users);
+// export const {
+//     selectAll: selectAllUsers,
+//     selectById: selectUserById,
+// } = userAdapter.getSelectors(state => state.users);
 
 export default userSlice.reducer;
