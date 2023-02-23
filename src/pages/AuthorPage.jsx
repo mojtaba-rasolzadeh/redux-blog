@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,6 +6,8 @@ import { fetchBlogs, selectAuthorBlogs } from "../reducers/blogSlice";
 import { selectUserById } from "../reducers/userSlice";
 import Spinner from "../components/spinner";
 import BackToMain from "../components/BackToMain";
+import { createSelector } from "@reduxjs/toolkit";
+import { useGetBlogsQuery } from "../api/apiSlice";
 
 const AuthorPage = () => {
     const { authorId } = useParams();
@@ -14,7 +16,24 @@ const AuthorPage = () => {
     const author = useSelector((state) => selectUserById(state, authorId));
     const blogStatus = useSelector(state => state.blogs.status);
 
-    const authorBlogs = useSelector(state => selectAuthorBlogs(state, authorId));
+    // const authorBlogs = useSelector(state => selectAuthorBlogs(state, authorId));
+
+    const selectAuthorBlogs = useMemo(() => {
+        const emptyArray = [];
+
+        return createSelector(
+            (res) => res.data,
+            (res, authorId) => authorId,
+            (data, authorId) => data?.filter(blog => blog.author === authorId) ?? emptyArray
+        )
+    }, []);
+
+    const { authorBlogs } = useGetBlogsQuery(undefined, {
+        selectFromResult: result => ({
+            ...result,
+            authorBlogs: selectAuthorBlogs(result, authorId)
+        })
+    })
 
     useEffect(() => {
         dispatch(fetchBlogs());

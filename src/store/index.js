@@ -7,8 +7,7 @@ import {
     apiSlice
 } from '../api/apiSlice';
 import userReducer, {
-    extendedApi,
-    fetchAuthors
+    extendedApi
 } from '../reducers/userSlice';
 
 export const store = configureStore({
