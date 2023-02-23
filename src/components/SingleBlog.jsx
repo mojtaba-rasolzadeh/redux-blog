@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDeleteBlogMutation } from "../api/apiSlice";
 import { deleteBlogApi } from "../reducers/blogSlice";
 
 import ConfirmDelete from "./ConfirmDelete";
@@ -12,6 +13,8 @@ import ShowAuthor from "./ShowAuthor";
 const SingleBlog = ({ blog }) => {
     const [showSettings, setShowSettings] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    const [deleteBlog] = useDeleteBlogMutation();
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -31,9 +34,9 @@ const SingleBlog = ({ blog }) => {
     }
 
 
-    const handleDeleteBlog = () => {
+    const handleDeleteBlog = async () => {
         if (blog) {
-            dispatch(deleteBlogApi(blog.id))
+            await deleteBlog(blog.id);
             setShowModal(false);
             navigate('/');
             toast.error("The blog was deleted!");

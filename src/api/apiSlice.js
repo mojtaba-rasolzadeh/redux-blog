@@ -48,6 +48,13 @@ export const apiSlice = createApi({
                 id: arg.id
             }]
         }),
+        deleteBlog: builder.mutation({
+            query: (blogId) => ({
+                url: `/blogs/${blogId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['BLOG']
+        }),
         getAuthors: builder.query({
             query: () => '/users'
         }),
@@ -58,5 +65,6 @@ export const {
     useGetBlogsQuery,
     useGetBlogQuery,
     useAddNewBlogMutation,
-    useEditBlogMutation
+    useEditBlogMutation,
+    useDeleteBlogMutation
 } = apiSlice;
