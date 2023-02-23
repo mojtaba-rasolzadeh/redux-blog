@@ -7,6 +7,7 @@ import {
     apiSlice
 } from '../api/apiSlice';
 import userReducer, {
+    extendedApi,
     fetchAuthors
 } from '../reducers/userSlice';
 
@@ -21,4 +22,4 @@ export const store = configureStore({
 });
 
 // store.dispatch(fetchAuthors());
-store.dispatch(apiSlice.endpoints.getAuthors.initiate());
+store.dispatch(extendedApi.endpoints.getAuthors.initiate());

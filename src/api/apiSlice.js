@@ -55,9 +55,6 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['BLOG']
         }),
-        getAuthors: builder.query({
-            query: () => '/users'
-        }),
     })
 })
 

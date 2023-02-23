@@ -13,7 +13,16 @@ import {
     getAllAuthors
 } from '../services/blogsServices';
 
-export const selectUsersResult = apiSlice.endpoints.getAuthors.select();
+export const extendedApi = apiSlice.injectEndpoints({
+    endpoints: builder => ({
+        getAuthors: builder.query({
+            query: () => '/users'
+        }),
+
+    }),
+});
+
+export const selectUsersResult = extendedApi.endpoints.getAuthors.select();
 const emptyUsers = [];
 
 export const selectAllUsers = createSelector(
@@ -63,4 +72,5 @@ const userSlice = createSlice({
 //     selectById: selectUserById,
 // } = userAdapter.getSelectors(state => state.users);
 
+export const { useGetAuthorsQuery } = extendedApi;
 export default userSlice.reducer;

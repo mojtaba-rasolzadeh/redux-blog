@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDeleteBlogMutation } from "../api/apiSlice";
-import { deleteBlogApi } from "../reducers/blogSlice";
 
 import ConfirmDelete from "./ConfirmDelete";
 import OverlayShowSettings from "./OverlayShowSettings";
@@ -17,7 +15,6 @@ const SingleBlog = ({ blog }) => {
     const [deleteBlog] = useDeleteBlogMutation();
 
     const navigate = useNavigate();
-    const dispatch = useDispatch()
 
     const handleOnShowModal = () => {
         setShowModal(true);
@@ -32,7 +29,6 @@ const SingleBlog = ({ blog }) => {
         navigate(path);
         setShowSettings(false);
     }
-
 
     const handleDeleteBlog = async () => {
         if (blog) {
