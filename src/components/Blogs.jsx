@@ -2,11 +2,11 @@ import { useGetBlogsQuery } from '../api/apiSlice';
 import Spinner from './spinner';
 import SingleBlog from './SingleBlog';
 
-const Blogs = () => {
+const Blogs = ({blogs,isLoading,isSuccess}) => {
 
-    const { data: blogs = [], isLoading, isSuccess } = useGetBlogsQuery();
+    // const { data: blogs = [], isLoading, isSuccess } = useGetBlogsQuery();
 
-    const orderedBlogs = blogs.slice().sort((a, b) => b.created_at && b.created_at.localeCompare(a.created_at));
+    const orderedBlogs = blogs?.slice().sort((a, b) => b.created_at && b.created_at.localeCompare(a.created_at));
 
     let content;
     if (isLoading) {
@@ -15,7 +15,7 @@ const Blogs = () => {
         content =
             <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 xl:grid-cols-4 mx-auto my-28 md:mt-16">
                 {
-                    orderedBlogs.map((blog) => (
+                    orderedBlogs?.map((blog) => (
                         <SingleBlog key={blog.id} blog={blog} />
                     ))
                 }

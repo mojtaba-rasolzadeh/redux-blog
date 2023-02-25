@@ -1,11 +1,9 @@
 
-const SearchBox = () => {
+const SearchBox = ({handleSearch}) => {
     return (
-        <div className="container flex justify-center items-center mx-auto p-16">
-            {/* <h2 className="text-5xl text-white text-center tracking-wide md:text-4xl">
-                Blog Redux
-            </h2> */}
-            <div className="absolute flex w-11/12 items-center bg-white rounded-xl p-3 px-5 -bottom-11 drop-shadow-2xl md:w-1/2">
+        <div className="container absolute flex justify-center items-center mx-auto">
+            {/* <div className="absolute flex w-11/12 items-center bg-white rounded-xl p-3 px-5 -bottom-11 drop-shadow-2xl md:w-1/2"> */}
+            <div className="absolute flex w-11/12 items-center bg-white rounded-xl p-3 px-5 drop-shadow-2xl md:w-1/2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -24,6 +22,7 @@ const SearchBox = () => {
                     type="search"
                     placeholder="Search By Category"
                     className="w-full px-3 py-5 focus:outline-none tracking-wider"
+                    onChange={(e) => handleSearch(e.target.value)}
                 />
             </div>
         </div>

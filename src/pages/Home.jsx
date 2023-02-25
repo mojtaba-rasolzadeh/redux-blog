@@ -1,15 +1,31 @@
 import { useState } from 'react';
+import _ from 'lodash';
+import { useGetBlogsQuery } from '../api/apiSlice';
 
-import { Categories, Blog, Blogs } from '../components'
+import { Categories, Blog, Blogs, Header } from '../components'
 import OverlaySidebar from '../components/OverlaySidebar';
+import SearchBox from '../components/SearchBox';
 import Sidebar from '../components/Sidebar';
 
 const Home = () => {
     const [showMenu, setShowMenu] = useState(false);
 
+    const { data: blogs = [], isLoading, isSuccess } = useGetBlogsQuery();
+
+    const [filtredBlogs, setFiltredBlogs] = useState(blogs);
+
     const handleChangeShowMenu = () => setShowMenu(!showMenu);
 
     const handleClose = () => setShowMenu(false);
+
+    const handleSearch = _.debounce(
+        (query) => {
+            if (!query) return setFiltredBlogs(blogs);
+            const blogsFiltred =
+                blogs.filter(blog => blog.category.toLowerCase().includes(query.toLowerCase().trim()));
+            setFiltredBlogs(blogsFiltred)
+        }
+        , 300)
 
     return (
         <div className='ease-linear duration-500'>
@@ -22,15 +38,21 @@ const Home = () => {
             {
                 <>
                     {showMenu && <OverlaySidebar showMenu={showMenu} onClose={handleClose} />
-                     }
-                     <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} />
-                    
+                    }
+                    <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} />
+
                 </>
             }
             <div onClick={handleClose}>
+                <Header />
+                <SearchBox handleSearch={handleSearch} />
                 <Categories />
                 {/* <Blog /> */}
-                <Blogs />
+                <Blogs
+                    blogs={filtredBlogs}
+                    isLoading={isLoading}
+                    isSuccess={isSuccess}
+                />
             </div>
         </div>
     );

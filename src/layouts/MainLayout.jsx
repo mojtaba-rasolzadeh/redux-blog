@@ -1,14 +1,14 @@
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
-import Header from "../components/Header";
+// import Header from "../components/Header";
 
 const MainLayout = () => {
-    const location = useLocation();
+    // const location = useLocation();
 
     return (
         <>
-            {location.pathname === '/' && <Header />}
+            {/* {location.pathname === '/' && <Header />} */}
             {/* <Header /> */}
             <div>
                 <Outlet />
