@@ -2,16 +2,13 @@ import { useGetBlogsQuery } from '../api/apiSlice';
 import Spinner from './spinner';
 import SingleBlog from './SingleBlog';
 
-const Blogs = ({blogs,isLoading,isSuccess}) => {
-
-    // const { data: blogs = [], isLoading, isSuccess } = useGetBlogsQuery();
-
-    const orderedBlogs = blogs?.slice().sort((a, b) => b.created_at && b.created_at.localeCompare(a.created_at));
+const Blogs = ({ blogs, isLoading, isSuccess }) => {
 
     let content;
     if (isLoading) {
         content = <Spinner />;
     } else if (isSuccess) {
+        const orderedBlogs = blogs?.slice().sort((a, b) => b.created_at && b.created_at.localeCompare(a.created_at));
         content =
             <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 xl:grid-cols-4 mx-auto my-28 md:mt-16">
                 {

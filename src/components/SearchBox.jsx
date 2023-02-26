@@ -1,7 +1,7 @@
 
 const SearchBox = ({handleSearch}) => {
     return (
-        <div className="container absolute flex justify-center items-center mx-auto">
+        <div className="container flex justify-center items-center mx-auto">
             {/* <div className="absolute flex w-11/12 items-center bg-white rounded-xl p-3 px-5 -bottom-11 drop-shadow-2xl md:w-1/2"> */}
             <div className="absolute flex w-11/12 items-center bg-white rounded-xl p-3 px-5 drop-shadow-2xl md:w-1/2">
                 <svg

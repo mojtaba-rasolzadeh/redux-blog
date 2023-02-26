@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { useGetBlogsQuery } from '../api/apiSlice';
 
@@ -6,13 +6,14 @@ import { Categories, Blog, Blogs, Header } from '../components'
 import OverlaySidebar from '../components/OverlaySidebar';
 import SearchBox from '../components/SearchBox';
 import Sidebar from '../components/Sidebar';
+import EmptyList from '../components/EmptyList';
 
 const Home = () => {
     const [showMenu, setShowMenu] = useState(false);
 
-    const { data: blogs = [], isLoading, isSuccess } = useGetBlogsQuery();
+    const { data: blogsList = [], isLoading, isSuccess } = useGetBlogsQuery();
 
-    const [filtredBlogs, setFiltredBlogs] = useState(blogs);
+    const [blogs, setBlogs] = useState([]);
 
     const handleChangeShowMenu = () => setShowMenu(!showMenu);
 
@@ -20,12 +21,16 @@ const Home = () => {
 
     const handleSearch = _.debounce(
         (query) => {
-            if (!query) return setFiltredBlogs(blogs);
-            const blogsFiltred =
-                blogs.filter(blog => blog.category.toLowerCase().includes(query.toLowerCase().trim()));
-            setFiltredBlogs(blogsFiltred)
+            if (!query) return setBlogs(blogsList);
+            const filtreredBlogs =
+                blogsList.filter(blog => blog.category.toLowerCase().includes(query.toLowerCase().trim()));
+            setBlogs(filtreredBlogs)
         }
         , 300)
+
+    useEffect(() => {
+        setBlogs(blogsList);
+    }, [blogsList]);
 
     return (
         <div className='ease-linear duration-500'>
@@ -48,11 +53,14 @@ const Home = () => {
                 <SearchBox handleSearch={handleSearch} />
                 <Categories />
                 {/* <Blog /> */}
-                <Blogs
-                    blogs={filtredBlogs}
-                    isLoading={isLoading}
-                    isSuccess={isSuccess}
-                />
+                {
+                    !blogs.length ? <EmptyList /> :
+                        <Blogs
+                            blogs={blogs}
+                            isLoading={isLoading}
+                            isSuccess={isSuccess}
+                        />
+                }
             </div>
         </div>
     );
