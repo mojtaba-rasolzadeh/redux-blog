@@ -7,17 +7,36 @@ import OverlaySidebar from '../components/OverlaySidebar';
 import SearchBox from '../components/SearchBox';
 import Sidebar from '../components/Sidebar';
 import EmptyList from '../components/EmptyList';
+import { useNavigate } from 'react-router-dom';
+import HamburgerBtn from '../components/HamburgerBtn';
 
 const Home = () => {
     const [showMenu, setShowMenu] = useState(false);
+    const navigate = useNavigate();
+    const [selected, setSelected] = useState(0);
 
     const { data: blogsList = [], isLoading, isSuccess } = useGetBlogsQuery();
+
+    const categries = ["all", ...new Set(blogsList.map(blog => blog.category)), "create blog"];
 
     const [blogs, setBlogs] = useState([]);
 
     const handleChangeShowMenu = () => setShowMenu(!showMenu);
 
     const handleClose = () => setShowMenu(false);
+
+    const handleFilteredBlogs = (category, index) => {
+        setSelected(index);
+        (category.toLowerCase() === 'create blog') && navigate('blogs/create-blog');
+
+        if (category.toLowerCase() === 'all') {
+            setBlogs(blogsList);
+            return
+        }
+
+        const filtreredBlogs = blogsList.filter(blog => blog.category.toLowerCase() === category.toLowerCase());
+        setBlogs(filtreredBlogs);
+    }
 
     const handleSearch = _.debounce(
         (query) => {
@@ -34,33 +53,24 @@ const Home = () => {
 
     return (
         <div className='ease-linear duration-500'>
-            <button type="button" className={`absolute hamburger ${showMenu ? 'open' : undefined} top-10 right-6 md:hidden`} onClick={handleChangeShowMenu}>
-                <span className="hamburger-top"></span>
-                <span className="hamburger-middle"></span>
-                <span className="hamburger-bottom"></span>
-            </button>
-            {/* <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} /> */}
+
+            <HamburgerBtn showMenu={showMenu} handleChangeShowMenu={handleChangeShowMenu} />
             {
                 <>
-                    {showMenu && <OverlaySidebar showMenu={showMenu} onClose={handleClose} />
-                    }
+                    {showMenu && <OverlaySidebar showMenu={showMenu} onClose={handleClose} />}
                     <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} />
-
                 </>
             }
             <div onClick={handleClose}>
                 <Header />
                 <SearchBox handleSearch={handleSearch} />
-                <Categories />
+                <Categories categries={categries} selected={selected} handleFilteredBlogs={handleFilteredBlogs} />
                 {/* <Blog /> */}
-                {
-                    !blogs.length ? <EmptyList /> :
-                        <Blogs
-                            blogs={blogs}
-                            isLoading={isLoading}
-                            isSuccess={isSuccess}
-                        />
-                }
+                <Blogs
+                    blogs={blogs}
+                    isLoading={isLoading}
+                    isSuccess={isSuccess}
+                />
             </div>
         </div>
     );

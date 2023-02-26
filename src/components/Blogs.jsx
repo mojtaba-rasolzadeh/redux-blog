@@ -1,12 +1,15 @@
 import { useGetBlogsQuery } from '../api/apiSlice';
 import Spinner from './spinner';
 import SingleBlog from './SingleBlog';
+import EmptyList from './EmptyList';
 
 const Blogs = ({ blogs, isLoading, isSuccess }) => {
 
     let content;
     if (isLoading) {
         content = <Spinner />;
+    }else if(!blogs.length){
+        content = <EmptyList />
     } else if (isSuccess) {
         const orderedBlogs = blogs?.slice().sort((a, b) => b.created_at && b.created_at.localeCompare(a.created_at));
         content =
