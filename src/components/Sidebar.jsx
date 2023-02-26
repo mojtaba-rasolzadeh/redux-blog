@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ showMenu, onClose }) => {
+const Sidebar = ({ categries, selected, handleFilteredBlogs, showMenu, onClose }) => {
 
-    const [selected, setSelected] = useState(0);
-    const navigate = useNavigate();
+    // const [selected, setSelected] = useState(0);
+    // const navigate = useNavigate();
 
-    const categries = ["all", "development", "travel", "shopping", "adventure", "cooking", "art", "create blog"];
+    // const categries = ["all", "development", "travel", "shopping", "adventure", "cooking", "art", "create blog"];
 
-    const handleClick = (event, index) => {
-        onClose()
-        setSelected(index);
-        (event.target.textContent.toLowerCase() === 'create blog') && navigate('blogs/create-blog');
-    }
+    // const handleClick = (event, index) => {
+    //     onClose()
+    //     setSelected(index);
+    //     (event.target.textContent.toLowerCase() === 'create blog') && navigate('blogs/create-blog');
+    // }
     return (
         <div className={`fixed top-0 flex flex-col justify-between py-5 bg-white w-3/4 h-full z-50 ${showMenu ? '-translate-x-0' : '-translate-x-96'} ease-linear duration-300 sm:w-1/2 md:hidden`}>
             <div className="text-right space-y-4">
@@ -28,7 +28,7 @@ const Sidebar = ({ showMenu, onClose }) => {
                                 key={index}
                                 type="button"
                                 className={`text-md text-left capitalize tracking-wider p-2.5 px-5 ease-linear duration-300 ${selected === index ? 'bg-blue-500 text-white px-7' : 'text-zinc-500'} hover:text-white hover:bg-blue-500 hover:px-7 `}
-                                onClick={(event) => handleClick(event, index)}
+                                onClick={() => handleFilteredBlogs(category, index)}
                             >
                                 {category}
                             </button>

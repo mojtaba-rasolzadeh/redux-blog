@@ -27,6 +27,7 @@ const Home = () => {
 
     const handleFilteredBlogs = (category, index) => {
         setSelected(index);
+        handleChangeShowMenu();
         (category.toLowerCase() === 'create blog') && navigate('blogs/create-blog');
 
         if (category.toLowerCase() === 'all') {
@@ -58,7 +59,7 @@ const Home = () => {
             {
                 <>
                     {showMenu && <OverlaySidebar showMenu={showMenu} onClose={handleClose} />}
-                    <Sidebar showMenu={showMenu} onClose={handleChangeShowMenu} />
+                    <Sidebar categries={categries} selected={selected} handleFilteredBlogs={handleFilteredBlogs} showMenu={showMenu} onClose={handleChangeShowMenu} />
                 </>
             }
             <div onClick={handleClose}>
